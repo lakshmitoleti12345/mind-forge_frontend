@@ -96,8 +96,8 @@ export const api = {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ problem_id: problemId, code, language })
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Code execution failed');
+      const data = await safeJson(res);
+      if (!res.ok) throw new Error(data.error || data.detail || 'Code execution failed');
       return data;
     } catch (err) {
       console.error('Execute code error:', err);
